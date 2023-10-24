@@ -5,6 +5,8 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.Test;
 
+import java.util.regex.Pattern;
+
 public class InputValidationTest extends BaseTest{
     
     @Test
@@ -17,6 +19,6 @@ public class InputValidationTest extends BaseTest{
         page.getByLabel("Age:").type("25");
         page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
         page.getByLabel("Notes:").fill("Testing filling data");
-
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
     }
 }
