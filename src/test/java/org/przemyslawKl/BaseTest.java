@@ -1,3 +1,4 @@
+
 package org.przemyslawKl;
 
 import com.microsoft.playwright.*;
@@ -35,4 +36,6 @@ public class BaseTest {
         pw.close();
     }
 }
+
+
 
