@@ -33,13 +33,25 @@ public class InputValidationTest extends BaseTest{
 
     }
     @Test
-    void verify_if_user_can_submit_form_with_invalid_data(){
+    void verify_if_user_can_submit_form_with_invalid_age_too_small(){
         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
         page.pause();
         page.getByLabel("First name:").fill("First Name Test");
         page.getByLabel("Last name:").fill("Last Name Test");
-        page.getByLabel("Age:").type("25");
+        page.getByLabel("Age:").type("11");
+        page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
+        page.getByLabel("Notes:").fill("Testing filling data");
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
+    }
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_age_too_high(){
+        page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
+        PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
+        page.pause();
+        page.getByLabel("First name:").fill("First Name Test");
+        page.getByLabel("Last name:").fill("Last Name Test");
+        page.getByLabel("Age:").type("125");
         page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
         page.getByLabel("Notes:").fill("Testing filling data");
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
