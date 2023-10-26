@@ -9,17 +9,6 @@ import org.junit.jupiter.api.Test;
 import java.util.regex.Pattern;
 
 public class InputValidationTest extends BaseTest{
-    /*
-    In this input, form can throw several errors connected to length of inputs or values in it
-
-    First name can call error when input will be shorter or equal than 2 chars
-    Also first name will call error when input will be longer or equal to 90 chars
-    If no value will be added into input, app will throw error that input cannot be empty
-
-    Last name can call error when input will be shorter or equal than 10 chars
-    Also last name will call error when input will be longer or equal to 80 chars
-
-    */
     String firstNameInput = "Kassandra";
     String lastNameInput = "Norris";
     String rightAge = "25";
