@@ -3,10 +3,7 @@ package org.przemyslawKl;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
-import lombok.Data;
 import org.junit.jupiter.api.Test;
-
-import java.util.regex.Pattern;
 
 public class InputValidationTest extends BaseTest{
     String firstNameInput = "Kassandra";
@@ -15,6 +12,7 @@ public class InputValidationTest extends BaseTest{
     String tooYoungAge = "9";
     String tooOldAge = "152";
     String rightNotes = "Testing filling data";
+
     @Test
     void verify_if_user_can_submit_form_with_valid_data(){
         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
