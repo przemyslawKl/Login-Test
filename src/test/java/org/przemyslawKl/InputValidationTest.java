@@ -3,6 +3,7 @@ package org.przemyslawKl;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
+import lombok.Data;
 import org.junit.jupiter.api.Test;
 
 import java.util.regex.Pattern;
@@ -19,16 +20,22 @@ public class InputValidationTest extends BaseTest{
     Also last name will call error when input will be longer or equal to 80 chars
 
     */
+    String firstNameInput = "Kassandra";
+    String lastNameInput = "Norris";
+    String rightAge = "25";
+    String tooYoungAge = "9";
+    String tooOldAge = "152";
+    String rightNotes = "Testing filling data";
     @Test
     void verify_if_user_can_submit_form_with_valid_data(){
         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
         page.pause();
-        page.getByLabel("First name:").fill("First Name Test");
-        page.getByLabel("Last name:").fill("Last Name Test");
-        page.getByLabel("Age:").type("25");
+        page.getByLabel("First name:").fill(firstNameInput);
+        page.getByLabel("Last name:").fill(lastNameInput);
+        page.getByLabel("Age:").type(rightAge);
         page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
-        page.getByLabel("Notes:").fill("Testing filling data");
+        page.getByLabel("Notes:").fill(rightNotes);
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
 
     }
@@ -37,11 +44,11 @@ public class InputValidationTest extends BaseTest{
         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
         page.pause();
-        page.getByLabel("First name:").fill("First Name Test");
-        page.getByLabel("Last name:").fill("Last Name Test");
-        page.getByLabel("Age:").type("11");
+        page.getByLabel("First name:").fill(firstNameInput);
+        page.getByLabel("Last name:").fill(lastNameInput);
+        page.getByLabel("Age:").type(tooYoungAge);
         page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
-        page.getByLabel("Notes:").fill("Testing filling data");
+        page.getByLabel("Notes:").fill(rightNotes);
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
     }
     @Test
@@ -49,11 +56,11 @@ public class InputValidationTest extends BaseTest{
         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
         page.pause();
-        page.getByLabel("First name:").fill("First Name Test");
-        page.getByLabel("Last name:").fill("Last Name Test");
-        page.getByLabel("Age:").type("125");
+        page.getByLabel("First name:").fill(firstNameInput);
+        page.getByLabel("Last name:").fill(lastNameInput);
+        page.getByLabel("Age:").type(tooOldAge);
         page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
-        page.getByLabel("Notes:").fill("Testing filling data");
+        page.getByLabel("Notes:").fill(rightNotes);
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
     }
 }
