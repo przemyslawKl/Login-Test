@@ -1,4 +1,3 @@
-
 package org.przemyslawKl;
 
 import com.microsoft.playwright.*;
@@ -15,15 +14,15 @@ public class BaseTest {
     protected Page page;
 
     @BeforeAll
-     static void beforeAll() {
+    static void beforeAll() {
         pw = Playwright.create();
         browser = pw.chromium().launch(new BrowserType.LaunchOptions().setSlowMo(1000).setHeadless(false));
     }
 
     @BeforeEach
     void beforeEach(){
-    context = browser.newContext();
-    page = context.newPage();
+        context = browser.newContext();
+        page = context.newPage();
     }
 
     @AfterEach
@@ -36,6 +35,3 @@ public class BaseTest {
         pw.close();
     }
 }
-
-
-
