@@ -14,47 +14,40 @@ public class InputValidationTest extends BaseTest{
     String tooOldAge = "152";
     String rightNotes = "Testing filling data";
 
-
-
-    private void test_add_valid_name_lastname_age(String firstname, String lastname, String age){
+    private void test_add_valid_name_lastname_age(String firstname, String lastname, String age, String notes){
         page.getByLabel("First name:").fill(firstname);
         page.getByLabel("Last name:").fill(lastname);
         page.getByLabel("Age:").fill(age);
+        page.getByLabel("Notes:").fill(notes);
     }
-    @Test
-    void verify_if_user_can_submit_form_with_valid_data(){
+
+    private void add_country_to_form_and_click_submit(String countryName){
+        page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption(countryName);
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
+    }
+
+    private void enter_website_and_validate_if_user_is_on_right_one(){
         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
-        test_add_valid_name_lastname_age("Adam", "Neville", "20");
-        //test1();
-        page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
-        page.getByLabel("Notes:").fill(rightNotes);
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
-
     }
 
+    @Test
+    void verify_if_user_can_submit_form_with_valid_data(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(firstNameInput, lastNameInput, rightAge, rightNotes);
+        add_country_to_form_and_click_submit("Poland");
+    }
 
     @Test
     void verify_if_user_can_submit_form_with_invalid_age_too_small(){
-        page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
-        PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
-        page.getByLabel("First name:").fill(firstNameInput);
-        page.getByLabel("Last name:").fill(lastNameInput);
-        page.getByLabel("Age:").type(tooYoungAge);
-        page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
-        page.getByLabel("Notes:").fill(rightNotes);
-        page.pause();
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(firstNameInput, lastNameInput,tooYoungAge, rightNotes);
+        add_country_to_form_and_click_submit("France");
     }
     @Test
     void verify_if_user_can_submit_form_with_invalid_age_too_high(){
-        page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
-        PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
-        page.getByLabel("First name:").fill(firstNameInput);
-        page.getByLabel("Last name:").fill(lastNameInput);
-        page.getByLabel("Age:").type(tooOldAge);
-        page.getByRole(AriaRole.COMBOBOX, new Page.GetByRoleOptions().setName("Country:")).selectOption("San Marino");
-        page.getByLabel("Notes:").fill(rightNotes);
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("submit")).click();
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(firstNameInput, lastNameInput, tooOldAge, rightNotes);
+        add_country_to_form_and_click_submit("Brazil");
     }
 }
