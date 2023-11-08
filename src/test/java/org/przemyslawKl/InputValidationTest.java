@@ -1,14 +1,24 @@
 package org.przemyslawKl;
 
+import com.microsoft.playwright.ElementHandle;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
+import javax.swing.*;
+
 public class InputValidationTest extends BaseTest{
     String firstNameInput = "Kassandra";
-    String lastNameInput = "Norris";
+    String shortFirstNameInput = String.valueOf(firstNameInput.charAt(0));
+    String veryLongFirstNameInputCorrect = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit aenean commodo ligula eget dolor";
+    String veryLongFirstNameInputNotCorrect = veryLongFirstNameInputCorrect + "a";
+    String lastNameInput = "Wojciechowska";
+    String shortLastNameInput = String.valueOf(lastNameInput.charAt(0));
+    String veryLongLastNameInputCorrect = "Pneumonoultramicroscotamicroscopicsilicovolcanoconiosispicsilicovolcanoconiosis";
+    String veryLongLastNameInputNotCorrect = veryLongLastNameInputCorrect + "a";
     String rightAge = "25";
     String tooYoungAge = "9";
     String tooOldAge = "152";
@@ -31,11 +41,21 @@ public class InputValidationTest extends BaseTest{
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
     }
 
+    private void form_validation_passed(){
+        PlaywrightAssertions.assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Input Validation Response"))).isVisible();
+        PlaywrightAssertions.assertThat(page.getByText("Your Input passed validation")).isVisible();
+    }
+
+    private void form_validation_not_passed(){
+        PlaywrightAssertions.assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Input Validation Response"))).not().isVisible();
+        PlaywrightAssertions.assertThat(page.getByText("Your Input passed validation")).not().isVisible();
+    }
     @Test
     void verify_if_user_can_submit_form_with_valid_data(){
         enter_website_and_validate_if_user_is_on_right_one();
         test_add_valid_name_lastname_age(firstNameInput, lastNameInput, rightAge, rightNotes);
         add_country_to_form_and_click_submit("Poland");
+        form_validation_passed();
     }
 
     @Test
@@ -43,11 +63,45 @@ public class InputValidationTest extends BaseTest{
         enter_website_and_validate_if_user_is_on_right_one();
         test_add_valid_name_lastname_age(firstNameInput, lastNameInput,tooYoungAge, rightNotes);
         add_country_to_form_and_click_submit("France");
+        form_validation_not_passed();
     }
     @Test
     void verify_if_user_can_submit_form_with_invalid_age_too_high(){
         enter_website_and_validate_if_user_is_on_right_one();
         test_add_valid_name_lastname_age(firstNameInput, lastNameInput, tooOldAge, rightNotes);
         add_country_to_form_and_click_submit("Brazil");
+        form_validation_not_passed();
+    }
+
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_first_name_too_long(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(veryLongFirstNameInputNotCorrect, lastNameInput, tooOldAge, rightNotes);
+        add_country_to_form_and_click_submit("Poland");
+        form_validation_not_passed();
+    }
+
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_last_name_too_long(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(firstNameInput, veryLongLastNameInputNotCorrect, tooOldAge, rightNotes);
+        add_country_to_form_and_click_submit("Brazil");
+        form_validation_not_passed();
+    }
+
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_last_name_and_first_name_too_long(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(veryLongFirstNameInputNotCorrect, veryLongLastNameInputNotCorrect, tooOldAge, rightNotes);
+        add_country_to_form_and_click_submit("Qatar");
+        form_validation_not_passed();
+    }
+
+    @Test
+    void verify_if_user_can_submit_form_with_valid_data_long_firstname_and_lastname(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(veryLongFirstNameInputCorrect, veryLongLastNameInputCorrect, rightAge, rightNotes);
+        add_country_to_form_and_click_submit("Poland");
+        form_validation_passed();
     }
 }
