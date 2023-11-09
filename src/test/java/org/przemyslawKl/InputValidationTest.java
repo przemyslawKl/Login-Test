@@ -76,7 +76,7 @@ public class InputValidationTest extends BaseTest{
     @Test
     void verify_if_user_can_submit_form_with_invalid_first_name_too_long(){
         enter_website_and_validate_if_user_is_on_right_one();
-        test_add_valid_name_lastname_age(veryLongFirstNameInputNotCorrect, lastNameInput, tooOldAge, rightNotes);
+        test_add_valid_name_lastname_age(veryLongFirstNameInputNotCorrect, lastNameInput, rightAge, rightNotes);
         add_country_to_form_and_click_submit("Poland");
         form_validation_not_passed();
     }
@@ -84,7 +84,7 @@ public class InputValidationTest extends BaseTest{
     @Test
     void verify_if_user_can_submit_form_with_invalid_last_name_too_long(){
         enter_website_and_validate_if_user_is_on_right_one();
-        test_add_valid_name_lastname_age(firstNameInput, veryLongLastNameInputNotCorrect, tooOldAge, rightNotes);
+        test_add_valid_name_lastname_age(firstNameInput, veryLongLastNameInputNotCorrect, rightAge, rightNotes);
         add_country_to_form_and_click_submit("Brazil");
         form_validation_not_passed();
     }
@@ -92,7 +92,7 @@ public class InputValidationTest extends BaseTest{
     @Test
     void verify_if_user_can_submit_form_with_invalid_last_name_and_first_name_too_long(){
         enter_website_and_validate_if_user_is_on_right_one();
-        test_add_valid_name_lastname_age(veryLongFirstNameInputNotCorrect, veryLongLastNameInputNotCorrect, tooOldAge, rightNotes);
+        test_add_valid_name_lastname_age(veryLongFirstNameInputNotCorrect, veryLongLastNameInputNotCorrect, rightAge, rightNotes);
         add_country_to_form_and_click_submit("Qatar");
         form_validation_not_passed();
     }
@@ -103,5 +103,26 @@ public class InputValidationTest extends BaseTest{
         test_add_valid_name_lastname_age(veryLongFirstNameInputCorrect, veryLongLastNameInputCorrect, rightAge, rightNotes);
         add_country_to_form_and_click_submit("Poland");
         form_validation_passed();
+    }
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_firstname_too_short(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(shortFirstNameInput, lastNameInput,rightAge, rightNotes);
+        add_country_to_form_and_click_submit("France");
+        form_validation_not_passed();
+    }
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_lastname_too_short(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(firstNameInput, shortLastNameInput,rightAge, rightNotes);
+        add_country_to_form_and_click_submit("France");
+        form_validation_not_passed();
+    }
+    @Test
+    void verify_if_user_can_submit_form_with_invalid_firstname_and_lastname_too_short(){
+        enter_website_and_validate_if_user_is_on_right_one();
+        test_add_valid_name_lastname_age(shortFirstNameInput, shortLastNameInput,rightAge, rightNotes);
+        add_country_to_form_and_click_submit("France");
+        form_validation_not_passed();
     }
 }
