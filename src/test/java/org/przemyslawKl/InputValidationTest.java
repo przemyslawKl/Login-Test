@@ -1,16 +1,13 @@
 package org.przemyslawKl;
 
-import com.microsoft.playwright.ElementHandle;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
-import javax.swing.*;
 
-public class InputValidationTest extends BaseTest{
+
+ class InputValidationTest extends BaseTest{
     String firstNameInput = "Kassandra";
     String shortFirstNameInput = String.valueOf(firstNameInput.charAt(0));
     String veryLongFirstNameInputCorrect = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit aenean commodo ligula eget dolor";
@@ -50,6 +47,7 @@ public class InputValidationTest extends BaseTest{
         PlaywrightAssertions.assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Input Validation Response"))).not().isVisible();
         PlaywrightAssertions.assertThat(page.getByText("Your Input passed validation")).not().isVisible();
     }
+
     @Test
     void verify_if_user_can_submit_form_with_valid_data(){
         enter_website_and_validate_if_user_is_on_right_one();
