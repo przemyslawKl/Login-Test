@@ -38,11 +38,6 @@ import org.junit.jupiter.api.Test;
         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
     }
 
-     private void enter_one_website_and_validate_if_user_is_on_right_one(){
-         page.navigate("https://testpages.eviltester.com/styled/validation/input-validation.html");
-         PlaywrightAssertions.assertThat(page.getByText("Input Validation Examples")).isVisible();
-     }
-
     private void form_validation_passed(){
         PlaywrightAssertions.assertThat(page.getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName("Input Validation Response"))).isVisible();
         PlaywrightAssertions.assertThat(page.getByText("Your Input passed validation")).isVisible();
